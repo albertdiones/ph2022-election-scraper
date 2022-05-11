@@ -1,4 +1,5 @@
 import json
+from operator import contains
 from os import fdopen
 from time import sleep
 import requests
@@ -22,6 +23,8 @@ for precinct in range(107786,217316):
 
     if precinct in problematicPresincts:
         continue;
+    
+    print(f"Precinct # {precinct}")
 
     shard = str(precinct)[0:3]
     fileName = 'responses/' + str(precinct)+ '.json';
@@ -50,6 +53,8 @@ for precinct in range(107786,217316):
         file.write(responseText)
         file.close()
 
+    if "<Code>AccessDenied</Code>" in responseText:
+        continue;
 
     data = json.loads(responseText)
         
